@@ -1,4 +1,4 @@
-from asyncore import read
+
 import sqlite3 as sql
 
 
@@ -26,19 +26,20 @@ def createTable():
     cursor = conn.cursor()
     cursor.execute(
         """CREATE TABLE stock (
+            id int auto_increment,
             name text,
             cantidad integer,
-            precio integer
+            primary key(id)
         )"""
     )
     conn.commit()
     conn.close()
 
 #fucnion para agregar elementos a al fila
-def insertRow(name, cantidad):
+def insertRow(code,name, cantidad):
     conn = sql.connect("stock.db")
     cursor = conn.cursor()
-    instruccion = f"INSERT INTO  stock VALUES('{name}', {cantidad})"
+    instruccion = f"INSERT INTO  stock VALUES({code},'{name}', {cantidad})"
     cursor.execute(instruccion)
     conn.commit()
     conn.close()
@@ -113,6 +114,14 @@ def deleteRow():
 
 
 
+print("Sistema stock")
+code = int(input("code:"))
+toner = str(input("toner: "))
+cant = int(input("cantidad: "))
+insertRow(code,toner,cant)
+
+
+"""
 if __name__ == "__main__":
     #createDB()
     #createTable()
@@ -129,3 +138,4 @@ if __name__ == "__main__":
     #search()
     #alertBajaCantidad()
     deleteRow()
+    """
